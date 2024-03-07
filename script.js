@@ -88,7 +88,7 @@ const changingGameBody = async () => {
 
         input.addEventListener(`click`, (ev) => giveDivDetails(ev.target));
 
-        input.addEventListener(`keyup`, (keyEvent) => {
+        input.addEventListener(`keydown`, (keyEvent) => {
             if (keyEvent.key != `Backspace`) {
                 input.value = keyEvent.key;
 
