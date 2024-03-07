@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="container edges">
+    <div class="container edges dp-flex align-center">
         <div class="header">
             <svg width="144" height="16" viewBox="0 0 144 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -24,26 +24,26 @@
                 </defs>
             </svg>
         </div>
-        <div class="word-to-guess edges">
+        <div class="word-to-guess edges dp-flex align-center jc-center">
             <label id="word"></label>
         </div>
-        <div class="tries-mistakes">
-            <div class="mistakes">
+        <div class="tries-mistakes dp-flex">
+            <div class="mistakes dp-flex">
                 <small>Mistakes: <span id="letter-mistaken"></span></small>
             </div>
-            <div class="tries">
+            <div class="tries dp-flex">
                 <small>Tries (<span id="number-of-tries">0/5</span>):</small>
-                <div class="tries-ball-container">
-                    <div class="empty ball ball-1"></div>
-                    <div class="empty ball ball-2"></div>
-                    <div class="empty ball ball-3"></div>
-                    <div class="empty ball ball-4"></div>
-                    <div class="empty ball ball-5"></div>
+                <div class="tries-ball-container dp-flex">
+                    <div class="empty tries-ball ball-1"></div>
+                    <div class="empty tries-ball ball-2"></div>
+                    <div class="empty tries-ball ball-3"></div>
+                    <div class="empty tries-ball ball-4"></div>
+                    <div class="empty tries-ball ball-5"></div>
                 </div>          
             </div>        
         </div>
-        <div class="input-word"></div>
-        <div class="button-options">
+        <div class="input-word dp-flex jc-center"></div>
+        <div class="button-options dp-flex jc-center">
             <div class="random button-style">
                 <button id="random-word">Random</button>
             </div>

@@ -10,27 +10,25 @@ const $inputWordDivs = $(`.input-word`);
 const $randomWordBtn = $(`#random-word`);
 const $resetMenuBtn = $(`#reset-menu`);
 
-let wordToMix;
-
 let letterOrder = 0;
-
+let triesSpan = 1;
 let LettersInArr = [];
 let divToCheck = [];
 let nextBall = $triesBallContainer.children[0];
-let triesSpan = 1;
+
+let wordToMix;
 
 const getWordFromApi = () => {
     return new Promise(async (resolve, reject) => {
         const options = {
             method: 'GET',
-            params: { maxLength: '8' },
             headers: {
                 'X-RapidAPI-Key': '48f083acb0msh1c2a2187bae615cp1f0dfejsn25ed4d9660c7',
                 'X-RapidAPI-Host': 'random-words5.p.rapidapi.com'
             }
         };
 
-        const url = 'https://random-words5.p.rapidapi.com/getRandom';
+        const url = 'https://random-words5.p.rapidapi.com/getRandom?maxLength=6';
 
         let promiseResponse = await fetch(url, options);
         resolve(await promiseResponse.text());
@@ -42,7 +40,7 @@ const randomizeWordOrder = () => {
         wordToMix = await getWordFromApi();
         let wordMixed = "";
         let setOrder = new Set();
-        console.log(wordToMix);
+
         for (let i = 0; i < wordToMix.length; i++) {
             LettersInArr.push(wordToMix[i]);
         }
@@ -70,13 +68,12 @@ const changingForNonExistingNumber = (maxNumber, numberToCheck, setToCompare) =>
 
 const changingGameBody = async () => {
     let wordMixed = await randomizeWordOrder();
-    $wordToMix.textContent = wordMixed;
-
     let documentFragment = document.createDocumentFragment();
+    $wordToMix.textContent = wordMixed;
 
     if (divToCheck.length != 0) {
         divToCheck.forEach(element => element.remove());
-        divToCheck.splice(0, divToCheck.length)
+        divToCheck.splice(0, divToCheck.length);
     }
 
     for (let i = 0; i < wordMixed.length; i++) {
@@ -88,9 +85,7 @@ const changingGameBody = async () => {
         input.setAttribute(`disabled`, "");
         input.id = `input-number-${i}`;
 
-        input.addEventListener(`click`, (ev) => {
-            giveDivDetails(ev.target);
-        });
+        input.addEventListener(`click`, (ev) => giveDivDetails(ev.target));
 
         input.addEventListener(`keyup`, (keyEvent) => {
             if (keyEvent.key != `Backspace`) {
@@ -112,11 +107,10 @@ const changingGameBody = async () => {
         });
 
         divToCheck.push(input);
-
         documentFragment.append(input);
     }
-    documentFragment.childNodes[0].removeAttribute(`disabled`);
 
+    documentFragment.childNodes[0].removeAttribute(`disabled`);
     $inputWordDivs.append(documentFragment);
 }
 
@@ -127,15 +121,14 @@ const giveDivDetails = (element) => {
 
     } else {
         element.classList.add(`active`);
-
     }
+
     $(`#${element.id}`).focus();
     element.value = '_';
 }
 
 const wordValidation = (currentElement) => {
     let divToCompare = divToCheck.indexOf(currentElement);
-
     let valueToCheck = LettersInArr[letterOrder];
     let valueToCheckFromDiv = $inputWordDivs.children[divToCompare].value;
 
@@ -143,6 +136,7 @@ const wordValidation = (currentElement) => {
         letterOrder++;
         return true;
     }
+
     return false;
 }
 
@@ -154,6 +148,7 @@ const goNext = (currentElement) => {
 
     } else {
         let finalWordInput = "";
+
         $inputWordDivs.childNodes.forEach(element => finalWordInput += element.value);
 
         if (wordToMix == finalWordInput) {
@@ -174,7 +169,7 @@ const goBack = (currentElement) => {
 }
 
 const showingAttemps = () => {
-    nextBall.classList.replace('empty', 'colored');
+    nextBall.classList.replace('empty', 'tries-colored');
 
     if (nextBall.nextElementSibling != null) {
         $numberOfTries.textContent = `${triesSpan}/5`;
@@ -186,31 +181,26 @@ const showingAttemps = () => {
     } else {
         $numberOfTries.textContent = `${triesSpan}/5`;
         let winnerMessage = [...$inputWordDivs.children];
+
         winnerMessage.forEach(element => element.classList.remove('active'));
         divToCheck.forEach(element => element.setAttribute(`disabled`, ""));
     }
-
 }
 
-const letterMistaken = (keyToPlace) => {
-    $letterErrors.innerHTML += `${keyToPlace}, `;
-}
+const letterMistaken = (keyToPlace) => $letterErrors.innerHTML += `${keyToPlace}, `;
 
-const checkIfGameStart = () => {
-    if (wordToMix != undefined) return true;
-}
+const checkIfGameStart = () => {if (wordToMix != undefined) return true};
+
 const startNewGame = () => {
     wordToMix = "";
     letterOrder = 0;
+    triesSpan = 1;
     LettersInArr = [];
     nextBall = $triesBallContainer.children[0];
-    triesSpan = 1;
     $numberOfTries.textContent = `0/5`;
     $letterErrors.innerHTML = "";
 
-    let resetingColoredBalls = [...$triesBallContainer.children];
-    resetingColoredBalls.forEach(element => element.classList.replace(`colored`, `empty`));
-
+    [...$triesBallContainer.children].forEach(element => element.classList.replace(`tries-colored`, `empty`));
 
     changingGameBody();
 }
@@ -218,34 +208,26 @@ const startNewGame = () => {
 const resetMenu = () => {
     wordToMix = "";
     letterOrder = 0;
+    triesSpan = 1;
     LettersInArr = [];
     nextBall = $triesBallContainer.children[0];
-    triesSpan = 1;
+    
     $numberOfTries.textContent = `0/5`;
     $letterErrors.innerHTML = "";
     $wordToMix.innerHTML = "";
 
-    let resetingColoredBalls = [...$triesBallContainer.children];
-    resetingColoredBalls.forEach(element => element.classList.replace(`colored`, `empty`));
+    [...$triesBallContainer.children].forEach(element => element.classList.replace(`tries-colored`, `empty`));
 
-    let removingDivs = [...$inputWordDivs.children]
-    removingDivs.forEach (element => element.remove());
+    [...$inputWordDivs.children].forEach(element => element.remove());
 }
 
 $randomWordBtn.addEventListener(`click`, ev => {
     if (checkIfGameStart()) {
-        console.log(`exec`);
         startNewGame();
 
     } else {
         changingGameBody();
     }
-
 });
 
-
-$resetMenuBtn.addEventListener(`click`, (ev) => {
-    if(wordToMix != undefined){
-        resetMenu();
-    }
-})
+$resetMenuBtn.addEventListener(`click`, (ev) => {if (wordToMix != undefined) resetMenu()});

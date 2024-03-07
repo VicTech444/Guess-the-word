@@ -14,70 +14,49 @@ body{
     padding: 20px;
     background-image: url(./assets/bg-guess-the-word.png);
     background-position: center;
-    background-size: 100%;
+    background-size: cover;
 }
+
+.dp-flex { display: flex; }
+.jc-center { justify-content: center; }
+.align-center { align-items: center; }
 
 .container{
     width: 450px;
     padding: 25px;
-    display: flex;
-    flex-direction: column;
     row-gap: 25px;
+    flex-direction: column;
     background-color: #030616; 
 }
 
-.header{
-    margin: 0 auto;
-}
-
-.edges{
-border-radius: 10px;
-}
-
-
 .word-to-guess{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    aspect-ratio: 1 / 0.15;
     font-size: 32px;
-    background-color: #4A5567;
     letter-spacing: 10px;
-    margin: 0 auto;
+    background-color: #4A5567;
     color: #97A3B6;
+    aspect-ratio: 1 / 0.15;  
 }
 
 .tries-mistakes{
     width: 85%;
-    margin: 0 auto;
-    color: #4A5567;
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 20px;
     column-gap: 5px;
-    align-items: center;
-
-    & .mistakes{
-        display: flex;
-        column-gap: 5px;
-    }
+    color: #4A5567;
+    justify-content: space-between;
+    
+    & .mistakes{ column-gap: 5px; }
 
     & .tries{
-        display: flex;
         column-gap: 3px;
-        align-items: baseline;
-        & small{
-            margin-right: 5px;
-        }      
 
-        & .colored{
-            background-color: #7429C6;
-        }
+        & small{ margin-right: 5px; }      
+
+        & .tries-colored{ background-color: #7429C6; }
     }
 }
 
-& .ball{
+& .tries-ball{
     width: 6px;
     height: 6px;
     background-color: #4A5567;
@@ -85,17 +64,13 @@ border-radius: 10px;
 }
 
 .input-word{
-    margin: 0 auto;
-    display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     width: 75%;
     column-gap: 10px;
     row-gap: 10px;
     margin-bottom: 15px;
     aspect-ratio: 1 / 0.1;
    
-    
     & input {
         display: flex;
         text-align: center;
@@ -111,16 +86,16 @@ border-radius: 10px;
         caret-color: #030616;
     }
 
-    & .active{
-        border: 2px solid #672171;
-    }
+    & .active { border: 2px solid #672171; }
+}
+
+.tries-ball-container{
+    align-self: center;
+    column-gap: 3px;
 }
 
 .button-options{
-    margin: 0 auto;
-    display: flex;
     width: 60%;
-    justify-content: center;
     column-gap: 30px;
 
     & button{
@@ -132,24 +107,17 @@ border-radius: 10px;
         outline: none;
         border: none;
 
-        &:active{
-            background-color: #672171;
-
-        }
+        &:active{background-color: #672171; }
     }
-}
-
-.tries-ball-container{
-    display: flex;
-    align-self: center;
-    column-gap: 3px;
 }
 
 #letter-mistaken{
     margin-left: 5px;
     display: inline-block;
     width: 100px;
-    font-size: 14px;
+    font-size: 16px;
     color: #97A3B6;
     font-weight: bold;
 }
+
+.edges{ border-radius: 10px; }
