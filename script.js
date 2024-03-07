@@ -83,6 +83,7 @@ const changingGameBody = async () => {
         input.setAttribute(`minLength`, 1);
         input.setAttribute(`maxLength`, 1);
         input.setAttribute(`disabled`, "");
+        input.setAttribute(`autocomplete`, "off");
         input.id = `input-number-${i}`;
 
         input.addEventListener(`click`, (ev) => giveDivDetails(ev.target));
